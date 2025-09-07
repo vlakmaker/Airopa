@@ -8,35 +8,46 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Death Knight Color Palette - Light Theme */
+    --background: 220 33% 98%; /* Pale parchment #F8F9FB */
+    --foreground: 0 0% 9%; /* Obsidian text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 0 0% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 218 50% 25%; /* Deep rune blue #1F365E */
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217 17% 94%; /* Light silver fog */
+    --secondary-foreground: 218 50% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 217 17% 94%;
+    --muted-foreground: 217 10% 46%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 215 100% 81%; /* Frost glow blue #A0C8FF */
+    --accent-foreground: 218 50% 25%;
+
+    --teal: 210 76% 66%; /* Icebound teal #63B3ED */
+    --teal-foreground: 0 0% 9%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 217 17% 87%; /* Silver fog grey #D7DCE3 */
+    --input: 217 17% 87%;
+    --ring: 215 100% 81%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Custom design tokens */
+    --frost-gradient: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--teal)) 100%);
+    --rune-gradient: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(218 60% 35%) 100%);
+    --card-shadow: 0 4px 12px -2px hsl(var(--primary) / 0.08);
+    --frost-shadow: 0 8px 25px -5px hsl(var(--accent) / 0.25);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +111,58 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Frosted card style */
+  .card-frosted {
+    @apply bg-card/95 backdrop-blur-sm border border-border rounded-xl shadow-[var(--card-shadow)] transition-[var(--transition-smooth)];
+  }
+
+  .card-frosted:hover {
+    @apply shadow-[var(--frost-shadow)] transform translate-y-[-2px];
+  }
+
+  /* Frost button styles */
+  .btn-frost {
+    @apply bg-gradient-to-r from-accent to-teal text-accent-foreground px-6 py-3 rounded-lg font-medium transition-[var(--transition-smooth)] shadow-lg hover:shadow-[var(--frost-shadow)] hover:scale-105;
+  }
+
+  /* Rune button styles */
+  .btn-rune {
+    @apply bg-gradient-to-r from-primary to-[hsl(218_60%_35%)] text-primary-foreground px-6 py-3 rounded-lg font-medium transition-[var(--transition-smooth)] shadow-lg hover:shadow-xl hover:scale-105;
+  }
+
+  /* Typography hierarchy */
+  .text-display {
+    @apply font-serif text-3xl md:text-4xl lg:text-5xl font-normal leading-tight;
+  }
+
+  .text-headline {
+    @apply font-serif text-xl md:text-2xl font-medium leading-snug;
+  }
+
+  .text-subhead {
+    @apply font-sans text-base md:text-lg font-medium text-muted-foreground;
+  }
+
+  .text-body {
+    @apply font-sans text-sm md:text-base leading-relaxed;
+  }
+
+  .text-caption {
+    @apply font-sans text-xs md:text-sm text-muted-foreground;
+  }
+
+  /* Country flag styling */
+  .country-flag {
+    @apply w-6 h-4 object-cover rounded-sm shadow-sm;
+  }
+
+  /* Newsletter input styling */
+  .newsletter-input {
+    @apply bg-card border-border focus:ring-accent focus:border-accent placeholder:text-muted-foreground;
   }
 }
