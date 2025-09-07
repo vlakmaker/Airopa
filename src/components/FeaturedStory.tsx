@@ -3,13 +3,16 @@ import featuredImage from "@/assets/featured-story.jpg";
 
 export const FeaturedStory = () => {
   return (
-    <section className="container mx-auto px-4 py-16">
+    <section id="featured-story" className="container mx-auto px-4 py-16">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-headline font-serif text-primary mb-8">
-          Featured Story
-        </h2>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-serif text-primary mb-4 relative inline-block">
+            Featured Story
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-accent rounded-full" />
+          </h2>
+        </div>
         
-        <article className="card-frosted overflow-hidden group cursor-pointer">
+        <article className="card-frosted overflow-hidden group cursor-pointer hover:scale-[1.02] transition-all duration-300">
           <div className="grid md:grid-cols-2 gap-0">
             <div className="relative h-64 md:h-full overflow-hidden">
               <img

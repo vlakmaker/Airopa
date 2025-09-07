@@ -20,7 +20,7 @@ const PolicyCard = ({ title, excerpt, source, type, icon }: PolicyCardProps) => 
   };
 
   return (
-    <article className={`card-frosted border-l-4 ${getBorderColor()} group cursor-pointer`}>
+    <article className={`card-frosted border-l-4 ${getBorderColor()} group cursor-pointer hover:scale-105 transition-all duration-300`}>
       <div className="p-6">
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 p-2 bg-secondary rounded-lg text-primary">
@@ -73,14 +73,17 @@ export const PolicySection = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4 py-16">
+    <section id="policy" className="container mx-auto px-4 py-16">
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Content */}
           <div>
-            <h2 className="text-headline font-serif text-primary mb-8">
-              Policy & Regulation
-            </h2>
+            <div className="text-center lg:text-left mb-12">
+              <h2 className="text-4xl font-serif text-primary mb-4 relative inline-block">
+                Policy & Regulation
+                <div className="absolute -bottom-2 left-1/2 lg:left-0 transform lg:transform-none -translate-x-1/2 w-16 h-1 bg-accent rounded-full" />
+              </h2>
+            </div>
             <div className="space-y-6">
               {policies.map((policy, index) => (
                 <PolicyCard key={index} {...policy} />
@@ -90,7 +93,7 @@ export const PolicySection = () => {
           
           {/* Featured Image */}
           <div className="relative">
-            <div className="card-frosted overflow-hidden">
+            <div className="card-frosted overflow-hidden hover:scale-105 transition-all duration-300">
               <img
                 src={policyImage}
                 alt="European Parliament AI Policy"

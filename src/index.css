@@ -161,8 +161,12 @@ All colors MUST be HSL.
     @apply w-6 h-4 object-cover rounded-sm shadow-sm;
   }
 
-  /* Newsletter input styling */
-  .newsletter-input {
-    @apply bg-card border-border focus:ring-accent focus:border-accent placeholder:text-muted-foreground;
+  .btn-frost-outline {
+    @apply border-accent/30 text-accent hover:bg-accent/10 hover:border-accent/50 transition-all duration-300;
+  }
+
+  /* Smooth scrolling for the entire page */
+  html {
+    scroll-behavior: smooth;
   }
 }

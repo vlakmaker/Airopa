@@ -1,41 +1,30 @@
-import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 export const Header = () => {
+  const scrollToFeatured = () => {
+    const element = document.getElementById('featured-story');
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <header className="relative overflow-hidden bg-gradient-to-br from-background via-background to-accent/5">
+    <header className="relative overflow-hidden bg-gradient-to-br from-background via-background to-accent/5 pt-20">
       <div className="absolute inset-0 bg-[url('/src/assets/hero-bg.jpg')] bg-cover bg-center opacity-5" />
       
       <div className="relative container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Logo and Brand */}
-          <div className="mb-8">
-            <h1 className="text-display font-serif text-primary mb-4">
-              AIropa<span className="text-accent">.news</span>
-            </h1>
-            <p className="text-subhead text-muted-foreground max-w-2xl mx-auto">
-              Signals from the European AI frontier
-            </p>
-          </div>
-
-          {/* Newsletter Signup */}
-          <div className="max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="newsletter-input flex-1"
-              />
-              <Button className="btn-frost">
-                <Mail className="w-4 h-4 mr-2" />
-                Subscribe
-              </Button>
-            </div>
-            <p className="text-caption mt-3">
-              Weekly dispatch • Curated insights • European focus
-            </p>
-          </div>
+          <h1 className="text-5xl md:text-6xl font-serif text-primary mb-6">
+            Signals from the European AI frontier
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            Curated insight on startups, regulation, and regional shifts in European AI
+          </p>
+          <Button 
+            onClick={scrollToFeatured}
+            variant="outline" 
+            className="btn-frost-outline"
+          >
+            Read Latest
+          </Button>
         </div>
       </div>
     </header>

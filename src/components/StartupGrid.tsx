@@ -11,7 +11,7 @@ interface StartupCardProps {
 }
 
 const StartupCard = ({ title, location, funding, category, image, description }: StartupCardProps) => (
-  <article className="card-frosted overflow-hidden group cursor-pointer">
+  <article className="card-frosted overflow-hidden group cursor-pointer hover:scale-105 transition-all duration-300">
     <div className="relative h-48 overflow-hidden bg-secondary">
       {image && (
         <img
@@ -79,11 +79,12 @@ export const StartupGrid = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4 py-16 bg-secondary/30">
+    <section id="startups" className="container mx-auto px-4 py-16 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-headline font-serif text-primary mb-4">
+          <h2 className="text-4xl font-serif text-primary mb-4 relative inline-block">
             European Startup Spotlight
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-accent rounded-full" />
           </h2>
           <p className="text-subhead text-muted-foreground max-w-2xl mx-auto">
             Latest funding rounds and breakthrough innovations from Europe's AI ecosystem

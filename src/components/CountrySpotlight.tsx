@@ -60,11 +60,12 @@ export const CountrySpotlight = () => {
   const currentCountry = countries[currentIndex];
 
   return (
-    <section className="container mx-auto px-4 py-16 bg-gradient-to-br from-secondary/20 to-accent/5">
+    <section id="countries" className="container mx-auto px-4 py-16 bg-gradient-to-br from-secondary/20 to-accent/5">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-headline font-serif text-primary mb-4">
+          <h2 className="text-4xl font-serif text-primary mb-4 relative inline-block">
             Country Spotlights
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-accent rounded-full" />
           </h2>
           <p className="text-subhead text-muted-foreground">
             AI developments across European nations
@@ -72,7 +73,7 @@ export const CountrySpotlight = () => {
         </div>
 
         {/* Main Spotlight */}
-        <div className={`card-frosted overflow-hidden mb-8 bg-gradient-to-br ${currentCountry.color}`}>
+        <div className={`card-frosted overflow-hidden mb-8 bg-gradient-to-br ${currentCountry.color} hover:scale-[1.02] transition-all duration-300 cursor-pointer`}>
           <div className="p-8 md:p-12">
             <div className="flex items-center gap-4 mb-6">
               <div className="text-4xl">{currentCountry.flag}</div>
