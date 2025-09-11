@@ -6,10 +6,14 @@ import { defineConfig } from "vite";
 
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "127.0.0.1",   // bind ONLY to localhost (was '::')
+    host: "0.0.0.0",     // bind to all interfaces for external access
     port: 5173,          // standard Vite port (use whatever you like)
     strictPort: true,    // fail instead of auto-picking random ports
     open: false,         // don't auto-open browser
+    fs: {
+      // Force Vite to allow reading markdown files and project files
+      allow: ["."],
+    },
   },
   preview: {
     host: "127.0.0.1",   // same safety for `npm run preview`
@@ -22,5 +26,11 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  define: {
+    global: 'globalThis',
+  },
+  optimizeDeps: {
+    include: ['buffer'],
   },
 }));

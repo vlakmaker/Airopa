@@ -1,11 +1,12 @@
-import { Navigation } from "@/components/Navigation";
-import { Header } from "@/components/Header";
-import { FeaturedStory } from "@/components/FeaturedStory";
-import { StartupGrid } from "@/components/StartupGrid";
-import { PolicySection } from "@/components/PolicySection";
 import { CountrySpotlight } from "@/components/CountrySpotlight";
-import { PreFooterNewsletter } from "@/components/PreFooterNewsletter";
+import { DebugPosts } from "@/components/DebugPosts";
+import { FeaturedStory } from "@/components/FeaturedStory";
 import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { Navigation } from "@/components/Navigation";
+import { PolicySection } from "@/components/PolicySection";
+import { PreFooterNewsletter } from "@/components/PreFooterNewsletter";
+import { StartupGrid } from "@/components/StartupGrid";
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
       <Navigation />
       <Header />
       <main>
+        <DebugPosts />
         <FeaturedStory />
         <StartupGrid />
         <PolicySection />
