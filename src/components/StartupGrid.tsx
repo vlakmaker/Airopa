@@ -8,10 +8,20 @@ export function StartupGrid() {
   useEffect(() => { byPillar('startups').then(ps => setPosts(ps.slice(0, 3))); }, []);
   if (!posts.length) return null;
   return (
-    <section id="startups" className="container mx-auto px-4 py-8">
-      <h2 className="text-headline mb-4">European Startup Spotlight</h2>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map(p => <StoryCard key={p.slug} post={p} />)}
+    <section id="startups" className="container mx-auto px-4 py-16">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-serif text-primary mb-4 relative inline-block">
+            European Startup Spotlight
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-accent rounded-full" />
+          </h2>
+          <p className="text-subhead text-muted-foreground">
+            Innovation from Europe's rising AI companies
+          </p>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+          {posts.map(p => <StoryCard key={p.slug} post={p} />)}
+        </div>
       </div>
     </section>
   );

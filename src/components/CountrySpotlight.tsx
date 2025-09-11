@@ -24,7 +24,7 @@ export const CountrySpotlight = () => {
             AI developments across European nations
           </p>
         </div>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
           {posts.map(p => <StoryCard key={p.slug} post={p} />)}
         </div>
       </div>

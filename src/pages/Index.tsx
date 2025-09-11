@@ -1,5 +1,4 @@
 import { CountrySpotlight } from "@/components/CountrySpotlight";
-import { DebugPosts } from "@/components/DebugPosts";
 import { FeaturedStory } from "@/components/FeaturedStory";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -14,7 +13,6 @@ const Index = () => {
       <Navigation />
       <Header />
       <main>
-        <DebugPosts />
         <FeaturedStory />
         <StartupGrid />
         <PolicySection />
