@@ -9,6 +9,7 @@ canonical: "https://www.eu-startups.com/..."
 editor_pick: true
 ai_generated: true
 summary: "Berlin launches a €50M AI compute initiative aimed at sovereignty; grants target model training and academic–industry collaboration."
+cover: "/assets/startup-berlin.jpg"
 ---
 
 **TL;DR**: Berlin commits €50M to local compute capacity. Funding geared toward SMEs, universities, and sovereign infra.

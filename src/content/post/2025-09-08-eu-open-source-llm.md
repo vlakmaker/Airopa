@@ -10,6 +10,7 @@ source:
 canonical: "https://venturebeat.com/eu-open-source-llm"
 ai_generated: true
 summary: "A European consortium of universities and research labs unveils an open-source large language model to promote transparency and reduce dependence on US tech giants."
+cover: "/assets/startup-berlin.jpg"
 ---
 
 The initiative aims to accelerate AI innovation in Europe while ensuring open access to foundational research.

@@ -9,6 +9,7 @@ canonical: "https://dutch-ai-board.nl/new-standards"
 editor_pick: false
 ai_generated: true
 summary: "Comprehensive framework for responsible AI development adopted by tech companies across Europe, setting new global standards for AI ethics."
+cover: "/assets/startup-berlin.jpg"
 ---
 
 **TL;DR**: Netherlands leads Europe in establishing comprehensive AI ethics framework.

@@ -9,6 +9,7 @@ canonical: "https://commission.europa.eu/ai-act-timeline"
 editor_pick: false
 ai_generated: true
 summary: "European Commission announces phased rollout approach for AI Act compliance, prioritizing high-risk applications and providing additional guidance for industry adaptation."
+cover: "/assets/startup-berlin.jpg"
 ---
 
 **TL;DR**: EU extends AI Act implementation to provide industry more time for compliance preparation.
