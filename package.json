@@ -7,8 +7,19 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
+    "build:analyze": "vite build --mode production && vite-plugin-analyzer",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:fix": "eslint . --fix",
+    "preview": "vite preview",
+    "preview:prod": "vite preview --port 4000",
+    "test:build": "npm run build && echo '✅ Build successful'",
+    "test:content": "node -e \"const {getAllPosts} = require('./dist/assets/index-kvm-jSMT.js'); getAllPosts().then(console.log).catch(console.error);\"",
+    "update:browserslist": "npx update-browserslist-db@latest",
+    "deploy:prepare": "npm run update:browserslist && npm run lint:fix && npm run build:prod",
+    "deploy:verify": "npm run test:build && echo '✅ Deployment package ready'",
+    "deploy:local": "npm run deploy:prepare && npx serve dist -p 3000",
+    "start": "npm run dev"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
