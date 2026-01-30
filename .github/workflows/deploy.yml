@@ -194,10 +194,7 @@ jobs:
       with:
         urls: |
           http://localhost:4173
-        uploadArtifacts: true
-        temporaryPublicStorage: true
-      env:
-        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        uploadArtifacts: false
 
   security-audit:
     name: Security Audit
