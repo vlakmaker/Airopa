@@ -13,6 +13,10 @@ ENV=${1:-local}
 echo "Environment: $ENV"
 echo ""
 
+# Remove bun.lockb if present (to avoid bun dependency issues)
+echo "🧹 Cleaning up bun.lockb if present..."
+rm -f bun.lockb
+
 # Update browserslist database
 echo "🔄 Updating browserslist database..."
 npm run update:browserslist
