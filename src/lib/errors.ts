@@ -40,7 +40,7 @@ export function handleContentError(error: unknown): Error {
 /**
  * Validate required frontmatter fields
  */
-export function validateFrontmatter(data: any): void {
+export function validateFrontmatter(data: Record<string, unknown>): void {
   const requiredFields = ['title', 'date', 'pillar'];
   const missingFields = requiredFields.filter(field => !data[field]);
 
