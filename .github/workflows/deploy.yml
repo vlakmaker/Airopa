@@ -28,7 +28,7 @@ jobs:
       run: npm ci
 
     - name: Update browserslist database
-      run: npm run update:browserslist
+      run: npx browserslist@latest --update-db
 
     - name: Lint code
       run: npm run lint

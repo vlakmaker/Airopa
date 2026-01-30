@@ -15,7 +15,7 @@
     "preview:prod": "vite preview --port 4000",
     "test:build": "npm run build && echo '✅ Build successful'",
     "test:content": "node -e \"const {getAllPosts} = require('./dist/assets/index-kvm-jSMT.js'); getAllPosts().then(console.log).catch(console.error);\"",
-    "update:browserslist": "npx update-browserslist-db@latest",
+    "update:browserslist": "npx browserslist@latest --update-db",
     "deploy:prepare": "npm run update:browserslist && npm run lint:fix && npm run build:prod",
     "deploy:verify": "npm run test:build && echo '✅ Deployment package ready'",
     "deploy:local": "npm run deploy:prepare && npx serve dist -p 3000",
