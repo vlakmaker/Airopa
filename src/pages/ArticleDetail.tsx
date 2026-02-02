@@ -38,12 +38,13 @@ export default function ArticleDetail() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Validate article ID
+  // Call hook at top level (before any conditional returns)
+  const { data: article, isLoading, error, refetch } = useArticle(id || '');
+
+  // Validate article ID after hooks
   if (!id) {
     return <NotFound />;
   }
-
-  const { data: article, isLoading, error, refetch } = useArticle(id);
 
   // Loading state
   if (isLoading) {
