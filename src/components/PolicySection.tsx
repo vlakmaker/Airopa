@@ -1,45 +1,17 @@
-import { byPillar } from '@/lib/content';
-import type { Post } from '@/types/content';
-import { useEffect, useState } from 'react';
 import { StoryCard } from './StoryCard';
 import { ErrorDisplay } from './ui/ErrorDisplay';
 import { StoryCardSkeleton } from './ui/LoadingSkeleton';
-import { handleContentError } from '@/lib/errors';
+import { useArticlesByCategory } from '@/hooks/useArticles';
+import { articlesToPosts } from '@/lib/adapters';
 
 export const PolicySection = () => {
-  const [state, setState] = useState<{
-    isLoading: boolean;
-    error: Error | null;
-    posts: Post[];
-  }>({
-    isLoading: true,
-    error: null,
-    posts: []
-  });
+  // Use React Query hook for data fetching
+  const { data, error, isLoading, refetch } = useArticlesByCategory('policy', 3);
 
-  const loadPolicyPosts = async () => {
-    try {
-      setState(prev => ({ ...prev, isLoading: true, error: null }));
-      
-      const posts = await byPillar('policy');
-      setState({ isLoading: false, error: null, posts: posts.slice(0, 3) });
-    } catch (error) {
-      const handledError = handleContentError(error);
-      console.error('Failed to load policy posts:', handledError);
-      
-      setState({ 
-        isLoading: false, 
-        error: handledError, 
-        posts: [] 
-      });
-    }
-  };
+  // Convert API articles to Post format
+  const posts = data?.articles ? articlesToPosts(data.articles) : [];
 
-  useEffect(() => {
-    loadPolicyPosts();
-  }, []);
-
-  if (state.isLoading) {
+  if (isLoading) {
     return (
       <section id="policy" className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
@@ -62,7 +34,7 @@ export const PolicySection = () => {
     );
   }
 
-  if (state.error) {
+  if (error) {
     return (
       <section id="policy" className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
@@ -72,9 +44,9 @@ export const PolicySection = () => {
               <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-accent rounded-full" />
             </h2>
           </div>
-          <ErrorDisplay 
-            error={state.error} 
-            retryCallback={loadPolicyPosts}
+          <ErrorDisplay
+            error={error}
+            retryCallback={() => refetch()}
             className="max-w-2xl mx-auto"
           />
         </div>
@@ -82,7 +54,7 @@ export const PolicySection = () => {
     );
   }
 
-  if (state.posts.length === 0) {
+  if (posts.length === 0) {
     return null;
   }
 
@@ -99,7 +71,7 @@ export const PolicySection = () => {
           </p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
-          {state.posts.map(p => <StoryCard key={p.slug} post={p} />)}
+          {posts.map(p => <StoryCard key={p.slug} post={p} />)}
         </div>
       </div>
     </section>

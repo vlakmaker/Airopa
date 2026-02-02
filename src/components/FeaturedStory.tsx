@@ -1,56 +1,23 @@
-import { featured } from '@/lib/content';
-import type { Post } from '@/types/content';
-import { useEffect, useState } from 'react';
 import { StoryCard } from './StoryCard';
 import { ErrorDisplay } from './ui/ErrorDisplay';
 import { StoryCardSkeleton } from './ui/LoadingSkeleton';
-import { handleContentError } from '@/lib/errors';
+import { useFeaturedArticles } from '@/hooks/useArticles';
+import { articleToPost } from '@/lib/adapters';
 
 /**
  * FeaturedStory Component - Displays the featured post with proper error handling
- * 
+ *
  * @returns React component with loading, error, and success states
  */
 export function FeaturedStory() {
-  // Professional state management with explicit states
-  const [state, setState] = useState<{
-    isLoading: boolean;
-    error: Error | null;
-    post: Post | null;
-  }>({
-    isLoading: true,
-    error: null,
-    post: null
-  });
+  // Use React Query hook for data fetching
+  const { data, error, isLoading, refetch } = useFeaturedArticles(1);
 
-  /**
-   * Load featured post with comprehensive error handling
-   */
-  const loadFeaturedPost = async () => {
-    try {
-      setState(prev => ({ ...prev, isLoading: true, error: null }));
-      
-      const post = await featured();
-      setState({ isLoading: false, error: null, post });
-    } catch (error) {
-      const handledError = handleContentError(error);
-      console.error('Failed to load featured post:', handledError);
-      
-      setState({ 
-        isLoading: false, 
-        error: handledError, 
-        post: null 
-      });
-    }
-  };
-
-  // Load data on component mount
-  useEffect(() => {
-    loadFeaturedPost();
-  }, []);
+  // Convert API article to Post format for StoryCard
+  const post = data?.articles?.[0] ? articleToPost(data.articles[0]) : null;
 
   // Professional state handling with proper fallbacks
-  if (state.isLoading) {
+  if (isLoading) {
     return (
       <section id="featured-story" className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
@@ -71,7 +38,7 @@ export function FeaturedStory() {
     );
   }
 
-  if (state.error) {
+  if (error) {
     return (
       <section id="featured-story" className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
@@ -81,9 +48,9 @@ export function FeaturedStory() {
               <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-accent rounded-full" />
             </h2>
           </div>
-          <ErrorDisplay 
-            error={state.error} 
-            retryCallback={loadFeaturedPost}
+          <ErrorDisplay
+            error={error}
+            retryCallback={() => refetch()}
             className="max-w-2xl mx-auto"
           />
         </div>
@@ -91,7 +58,7 @@ export function FeaturedStory() {
     );
   }
 
-  if (!state.post) {
+  if (!post) {
     return (
       <section id="featured-story" className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
@@ -123,7 +90,7 @@ export function FeaturedStory() {
           </p>
         </div>
         <div className="rounded-xl border border-border bg-card shadow-lg hover:shadow-xl transition">
-          <StoryCard post={state.post} />
+          <StoryCard post={post} />
         </div>
       </div>
     </section>
