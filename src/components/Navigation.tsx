@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,19 +32,28 @@ export const Navigation = () => {
   return (
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      isScrolled 
-        ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm" 
+      isScrolled
+        ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
         : "bg-transparent"
     )}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-xl font-serif font-medium text-primary hover:text-accent transition-colors"
-          >
-            AIropa<span className="text-accent">.news</span>
-          </button>
+          {/* Logo - Use Link for routing when not on home page */}
+          {isHomePage ? (
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="text-xl font-serif font-medium text-primary hover:text-accent transition-colors"
+            >
+              AIropa<span className="text-accent">.news</span>
+            </button>
+          ) : (
+            <Link
+              to="/"
+              className="text-xl font-serif font-medium text-primary hover:text-accent transition-colors"
+            >
+              AIropa<span className="text-accent">.news</span>
+            </Link>
+          )}
 
           {/* Navigation Items */}
           <div className="hidden md:flex items-center space-x-8">

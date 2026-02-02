@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/types/content";
 
@@ -16,10 +17,8 @@ export function StoryCard({ post, featured = false }: { post: Post; featured?: b
     };
 
     return (
-        <a
-            href={d.canonical}
-            target="_blank"
-            rel="noreferrer"
+        <Link
+            to={`/article/${post.slug}`}
             className={cn(
                 "group block rounded-xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-lg hover:scale-[1.02]",
                 featured ? "p-0 md:flex md:gap-6" : "p-0"
@@ -116,6 +115,6 @@ export function StoryCard({ post, featured = false }: { post: Post; featured?: b
                     </div>
                 </div>
             </article>
-        </a>
+        </Link>
     );
 }
