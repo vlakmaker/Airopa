@@ -8,7 +8,7 @@ export const Header = () => {
 
   return (
     <header className="relative overflow-hidden bg-gradient-to-br from-background via-background to-accent/5 pt-20">
-      <div className="absolute inset-0 bg-[url('/src/assets/hero-bg.jpg')] bg-cover bg-center opacity-5" />
+      <div className="absolute inset-0 bg-[url('/assets/hero-bg.jpg')] bg-cover bg-center opacity-5" />
       
       <div className="relative container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center">

@@ -19,6 +19,20 @@ function mapCategoryToPillar(category: string): Pillar {
 }
 
 /**
+ * Get category-based cover image
+ * Returns appropriate placeholder image based on article category
+ */
+function getCategoryImage(category: string): string {
+  const imageMapping: Record<string, string> = {
+    startups: '/assets/startup-berlin.jpg',
+    policy: '/assets/eu-parliament.jpg',
+    country: '/assets/featured-story.jpg',
+    stories: '/assets/featured-story.jpg',
+  };
+  return imageMapping[category] || '/assets/hero-bg.jpg';
+}
+
+/**
  * Convert API Article to Post format for components
  *
  * @param article - Article from API
@@ -36,6 +50,7 @@ export function articleToPost(article: Article): Post {
       url: article.url,
     },
     canonical: article.url,
+    cover: getCategoryImage(article.category), // Category-based placeholder image
     summary: `Quality Score: ${(article.quality_score * 100).toFixed(0)}%`, // Placeholder summary
     editor_pick: article.quality_score >= 0.8,
     ai_generated: false,
