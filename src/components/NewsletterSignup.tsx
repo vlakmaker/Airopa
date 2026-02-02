@@ -1,6 +1,5 @@
-import { Mail, CheckCircle, Zap, Globe, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Mail, CheckCircle, Zap, Globe, Users, Clock } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export const NewsletterSignup = () => {
   const benefits = [
@@ -23,7 +22,7 @@ export const NewsletterSignup = () => {
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-teal opacity-95" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(160,200,255,0.1)_0%,transparent_70%)]" />
-      
+
       <div className="relative container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Header */}
@@ -32,7 +31,7 @@ export const NewsletterSignup = () => {
               Stay Ahead of the Signal
             </h2>
             <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto leading-relaxed">
-              Join 12,000+ European AI professionals receiving our weekly dispatch. 
+              Join 12,000+ European AI professionals receiving our weekly dispatch.
               Get the insights that matter, delivered every Thursday.
             </p>
           </div>
@@ -51,20 +50,18 @@ export const NewsletterSignup = () => {
             ))}
           </div>
 
-          {/* Signup Form */}
+          {/* Coming Soon Badge */}
           <div className="max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Input
-                type="email"
-                placeholder="your.email@company.com"
-                className="flex-1 bg-white/95 border-white/20 text-foreground placeholder:text-muted-foreground focus:bg-white focus:ring-accent"
-              />
-              <Button className="bg-accent hover:bg-teal text-accent-foreground font-medium px-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <Mail className="w-4 h-4 mr-2" />
-                Subscribe
-              </Button>
+            <div className="flex flex-col items-center gap-4 py-8">
+              <Badge variant="secondary" className="text-lg px-8 py-3 gap-2 bg-white/95 text-foreground">
+                <Clock className="w-5 h-5" />
+                Coming Soon
+              </Badge>
+              <p className="text-primary-foreground/70 text-sm">
+                We're preparing something special for you
+              </p>
             </div>
-            
+
             <div className="flex items-center justify-center gap-2 mt-4 text-primary-foreground/70 text-sm">
               <CheckCircle className="w-4 h-4 text-accent" />
               <span>Free • No spam • Unsubscribe anytime</span>

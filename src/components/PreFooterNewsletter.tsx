@@ -1,6 +1,5 @@
-import { Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Mail, Clock } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export const PreFooterNewsletter = () => {
   return (
@@ -13,18 +12,16 @@ export const PreFooterNewsletter = () => {
           <p className="text-lg text-muted-foreground mb-8">
             Get the AIropa Dispatch every Sunday. European AI insights, curated and delivered.
           </p>
-          
+
           <div className="max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="newsletter-input flex-1"
-              />
-              <Button className="btn-frost">
-                <Mail className="w-4 h-4 mr-2" />
-                Subscribe
-              </Button>
+            <div className="flex flex-col items-center gap-4 py-8">
+              <Badge variant="secondary" className="text-base px-6 py-2 gap-2">
+                <Clock className="w-4 h-4" />
+                Coming Soon
+              </Badge>
+              <p className="text-sm text-muted-foreground">
+                We're preparing something special for you
+              </p>
             </div>
             <p className="text-caption mt-3 text-muted-foreground">
               Weekly dispatch • No spam • Unsubscribe anytime
