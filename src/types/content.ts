@@ -9,6 +9,7 @@ export interface PostFrontmatter {
     source: { name: string; url: string };
     canonical: string;
     cover?: string;      // optional image URL
+    cover_fallback?: string;
     location?: string;   // e.g. "Amsterdam, Netherlands"
     summary: string;
     editor_pick?: boolean;

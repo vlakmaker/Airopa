@@ -39,6 +39,8 @@ function getCategoryImage(category: string): string {
  * @returns Post object compatible with existing components
  */
 export function articleToPost(article: Article): Post {
+  const categoryFallback = getCategoryImage(article.category);
+
   const frontmatter: PostFrontmatter = {
     title: article.title,
     date: article.published_date || article.created_at,
@@ -50,7 +52,8 @@ export function articleToPost(article: Article): Post {
       url: article.url,
     },
     canonical: article.url,
-    cover: getCategoryImage(article.category), // Category-based placeholder image
+    cover: article.image_url || categoryFallback,
+    cover_fallback: categoryFallback,
     summary: `Quality Score: ${(article.quality_score * 100).toFixed(0)}%`, // Placeholder summary
     editor_pick: article.quality_score >= 0.8,
     ai_generated: false,

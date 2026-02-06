@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import { Calendar, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { PostFrontmatter } from "@/types/content";
-import { cn } from "@/lib/utils";
 
 interface ArticleHeroProps {
   frontmatter: PostFrontmatter;
@@ -14,6 +14,16 @@ interface ArticleHeroProps {
  * Gracefully handles missing cover images with a gradient fallback.
  */
 export function ArticleHero({ frontmatter }: ArticleHeroProps) {
+  const fallbackImage = frontmatter.cover_fallback || "/assets/hero-bg.jpg";
+  const initialImage = frontmatter.cover || fallbackImage;
+  const [imageSrc, setImageSrc] = useState(initialImage);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    setImageSrc(initialImage);
+    setIsImageLoaded(false);
+  }, [initialImage]);
+
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString("en-US", {
@@ -26,12 +36,21 @@ export function ArticleHero({ frontmatter }: ArticleHeroProps) {
   return (
     <div className="w-full">
       {/* Cover Image or Gradient Fallback */}
-      {frontmatter.cover ? (
-        <div className="w-full aspect-[21/9] overflow-hidden bg-muted">
+      {imageSrc ? (
+        <div className="relative w-full aspect-[21/9] overflow-hidden bg-muted">
+          {!isImageLoaded && <div className="absolute inset-0 animate-pulse bg-muted" />}
           <img
-            src={frontmatter.cover}
+            src={imageSrc}
             alt={frontmatter.title}
-            className="w-full h-full object-cover"
+            onLoad={() => setIsImageLoaded(true)}
+            onError={() => {
+              if (imageSrc !== fallbackImage) {
+                setImageSrc(fallbackImage);
+                return;
+              }
+              setIsImageLoaded(true);
+            }}
+            className={`w-full h-full object-cover transition-opacity duration-300 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
           />
         </div>
       ) : (

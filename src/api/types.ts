@@ -19,6 +19,7 @@ export interface Article {
   category: ArticleCategory;
   country?: ArticleCountry;
   quality_score: number;
+  image_url?: string | null;
   created_at: string;
   published_date?: string;
 }

@@ -1,9 +1,19 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/types/content";
 
 export function StoryCard({ post, featured = false }: { post: Post; featured?: boolean }) {
     const d = post.data;
+    const fallbackImage = d.cover_fallback || "/assets/hero-bg.jpg";
+    const initialImage = d.cover || fallbackImage;
+    const [imageSrc, setImageSrc] = useState(initialImage);
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+    useEffect(() => {
+        setImageSrc(initialImage);
+        setIsImageLoaded(false);
+    }, [initialImage]);
 
     // Format date like "3h ago" or "Sep 10"
     const formatDate = (dateStr: string) => {
@@ -26,17 +36,31 @@ export function StoryCard({ post, featured = false }: { post: Post; featured?: b
         >
             <article className="flex flex-col h-full">
                 {/* Cover Image */}
-                {d.cover && (
+                {imageSrc && (
                     <div
                         className={cn(
-                            "overflow-hidden bg-muted",
+                            "relative overflow-hidden bg-muted",
                             featured ? "aspect-video md:aspect-auto md:w-1/2" : "aspect-video"
                         )}
                     >
+                        {!isImageLoaded && <div className="absolute inset-0 animate-pulse bg-muted" />}
                         <img
-                            src={d.cover}
+                            src={imageSrc}
                             alt={d.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                            decoding="async"
+                            onLoad={() => setIsImageLoaded(true)}
+                            onError={() => {
+                                if (imageSrc !== fallbackImage) {
+                                    setImageSrc(fallbackImage);
+                                    return;
+                                }
+                                setIsImageLoaded(true);
+                            }}
+                            className={cn(
+                                "w-full h-full object-cover transition-all duration-300",
+                                isImageLoaded ? "opacity-100 group-hover:scale-105" : "opacity-0"
+                            )}
                         />
                     </div>
                 )}
