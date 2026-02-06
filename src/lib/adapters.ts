@@ -52,7 +52,7 @@ export function articleToPost(article: Article): Post {
       url: article.url,
     },
     canonical: article.url,
-    cover: article.image_url || categoryFallback,
+    cover: (article.image_url?.trim()) || categoryFallback,
     cover_fallback: categoryFallback,
     summary: `Quality Score: ${(article.quality_score * 100).toFixed(0)}%`, // Placeholder summary
     editor_pick: article.quality_score >= 0.8,

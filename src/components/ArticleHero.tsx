@@ -44,11 +44,11 @@ export function ArticleHero({ frontmatter }: ArticleHeroProps) {
             alt={frontmatter.title}
             onLoad={() => setIsImageLoaded(true)}
             onError={() => {
-              if (imageSrc !== fallbackImage) {
-                setImageSrc(fallbackImage);
-                return;
-              }
-              setIsImageLoaded(true);
+              setImageSrc((prev) => {
+                if (prev !== fallbackImage) return fallbackImage;
+                setIsImageLoaded(true);
+                return prev;
+              });
             }}
             className={`w-full h-full object-cover transition-opacity duration-300 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
           />

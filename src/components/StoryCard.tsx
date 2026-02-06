@@ -51,11 +51,11 @@ export function StoryCard({ post, featured = false }: { post: Post; featured?: b
                             decoding="async"
                             onLoad={() => setIsImageLoaded(true)}
                             onError={() => {
-                                if (imageSrc !== fallbackImage) {
-                                    setImageSrc(fallbackImage);
-                                    return;
-                                }
-                                setIsImageLoaded(true);
+                                setImageSrc((prev) => {
+                                    if (prev !== fallbackImage) return fallbackImage;
+                                    setIsImageLoaded(true);
+                                    return prev;
+                                });
                             }}
                             className={cn(
                                 "w-full h-full object-cover transition-all duration-300",

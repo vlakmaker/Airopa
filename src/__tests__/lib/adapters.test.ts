@@ -93,6 +93,16 @@ describe('Adapters', () => {
       expect(countryPost.data.cover_fallback).toBe('/assets/featured-story.jpg');
     });
 
+    it('should fallback to category image when image_url is empty string', () => {
+      const emptyImageArticle = { ...mockArticle, image_url: '' };
+      const post = articleToPost(emptyImageArticle);
+      expect(post.data.cover).toBe('/assets/startup-berlin.jpg');
+
+      const whitespaceArticle = { ...mockArticle, image_url: '   ' };
+      const wsPost = articleToPost(whitespaceArticle);
+      expect(wsPost.data.cover).toBe('/assets/startup-berlin.jpg');
+    });
+
     it('should include quality score in summary', () => {
       const post = articleToPost(mockArticle);
 
