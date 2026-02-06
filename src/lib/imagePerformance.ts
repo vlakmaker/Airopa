@@ -37,8 +37,6 @@ const summary: ImagePerformanceSummary = {
   byDomain: {},
 };
 
-let runningTotalLoadMs = 0;
-
 function parseDomain(url: string): string {
   try {
     return new URL(url, window.location.origin).hostname || "unknown";
@@ -91,7 +89,6 @@ export function reportImageMetric(payload: Omit<ImageMetricPayload, "domain">) {
     window.dispatchEvent(new CustomEvent("airopa:image-metric", { detail: normalized }));
     if (import.meta.env.DEV) {
       // Dev-only visibility while we don't have a dedicated analytics sink.
-      // eslint-disable-next-line no-console
       console.debug("[image-metric]", normalized);
     }
   }
