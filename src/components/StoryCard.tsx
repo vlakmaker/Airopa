@@ -1,19 +1,11 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import type { Post } from "@/types/content";
+import { ArticleImage } from "@/components/ArticleImage";
 
 export function StoryCard({ post, featured = false }: { post: Post; featured?: boolean }) {
     const d = post.data;
     const fallbackImage = d.cover_fallback || "/assets/hero-bg.jpg";
-    const initialImage = d.cover || fallbackImage;
-    const [imageSrc, setImageSrc] = useState(initialImage);
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
-
-    useEffect(() => {
-        setImageSrc(initialImage);
-        setIsImageLoaded(false);
-    }, [initialImage]);
 
     // Format date like "3h ago" or "Sep 10"
     const formatDate = (dateStr: string) => {
@@ -36,34 +28,17 @@ export function StoryCard({ post, featured = false }: { post: Post; featured?: b
         >
             <article className="flex flex-col h-full">
                 {/* Cover Image */}
-                {imageSrc && (
-                    <div
-                        className={cn(
-                            "relative overflow-hidden bg-muted",
-                            featured ? "aspect-video md:aspect-auto md:w-1/2" : "aspect-video"
-                        )}
-                    >
-                        {!isImageLoaded && <div className="absolute inset-0 animate-pulse bg-muted" />}
-                        <img
-                            src={imageSrc}
-                            alt={d.title}
-                            loading="lazy"
-                            decoding="async"
-                            onLoad={() => setIsImageLoaded(true)}
-                            onError={() => {
-                                setImageSrc((prev) => {
-                                    if (prev !== fallbackImage) return fallbackImage;
-                                    setIsImageLoaded(true);
-                                    return prev;
-                                });
-                            }}
-                            className={cn(
-                                "w-full h-full object-cover transition-all duration-300",
-                                isImageLoaded ? "opacity-100 group-hover:scale-105" : "opacity-0"
-                            )}
-                        />
-                    </div>
-                )}
+                <ArticleImage
+                    src={d.cover}
+                    fallbackSrc={fallbackImage}
+                    alt={d.title}
+                    loading="lazy"
+                    decoding="async"
+                    containerClassName={cn(
+                        featured ? "aspect-video md:aspect-auto md:w-1/2" : "aspect-video"
+                    )}
+                    imageClassName="group-hover:scale-105"
+                />
 
                 <div className={cn("flex flex-col flex-1", featured ? "p-6" : "p-5")}>
                     {/* Tags */}

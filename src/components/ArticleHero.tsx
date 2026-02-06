@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { Calendar, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { PostFrontmatter } from "@/types/content";
+import { ArticleImage } from "@/components/ArticleImage";
 
 interface ArticleHeroProps {
   frontmatter: PostFrontmatter;
@@ -15,14 +15,6 @@ interface ArticleHeroProps {
  */
 export function ArticleHero({ frontmatter }: ArticleHeroProps) {
   const fallbackImage = frontmatter.cover_fallback || "/assets/hero-bg.jpg";
-  const initialImage = frontmatter.cover || fallbackImage;
-  const [imageSrc, setImageSrc] = useState(initialImage);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-
-  useEffect(() => {
-    setImageSrc(initialImage);
-    setIsImageLoaded(false);
-  }, [initialImage]);
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -36,26 +28,14 @@ export function ArticleHero({ frontmatter }: ArticleHeroProps) {
   return (
     <div className="w-full">
       {/* Cover Image or Gradient Fallback */}
-      {imageSrc ? (
-        <div className="relative w-full aspect-[21/9] overflow-hidden bg-muted">
-          {!isImageLoaded && <div className="absolute inset-0 animate-pulse bg-muted" />}
-          <img
-            src={imageSrc}
-            alt={frontmatter.title}
-            onLoad={() => setIsImageLoaded(true)}
-            onError={() => {
-              setImageSrc((prev) => {
-                if (prev !== fallbackImage) return fallbackImage;
-                setIsImageLoaded(true);
-                return prev;
-              });
-            }}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
-          />
-        </div>
-      ) : (
-        <div className="w-full aspect-[21/9] bg-gradient-to-br from-accent/20 via-primary/10 to-secondary/20" />
-      )}
+      <ArticleImage
+        src={frontmatter.cover}
+        fallbackSrc={fallbackImage}
+        alt={frontmatter.title}
+        loading="eager"
+        decoding="async"
+        containerClassName="w-full aspect-[21/9]"
+      />
 
       {/* Article Header */}
       <div className="container mx-auto px-4 -mt-12 relative z-10">
