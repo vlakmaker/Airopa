@@ -1,73 +1,93 @@
-# Welcome to your Lovable project
+# AIropa.news
 
-## Project info
+Signals from the European AI frontier. Curated news, startups, and policy from across the continent.
 
-**URL**: https://lovable.dev/projects/01c9fdfc-a1de-4d81-aa56-8c5186803780
+**Live**: [www.airopa.news](https://www.airopa.news)
 
-## How can I edit this code?
+## What is AIropa?
 
-There are several ways of editing your application.
+AIropa is an automated news aggregator focused on European AI and technology. It scrapes RSS feeds from 13+ European tech sources, classifies articles using LLM-powered agents, and presents them in a clean, feed-first interface.
 
-**Use Lovable**
+## Architecture
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/01c9fdfc-a1de-4d81-aa56-8c5186803780) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+RSS Feeds (13 sources)
+    |
+    v
+[airopa-automation]         <-- Backend (FastAPI + PostgreSQL)
+  Scraper Agent             Fetches & deduplicates articles
+  Classifier Agent          LLM-powered category + EU relevance scoring
+  Summarizer Agent          2-3 sentence editorial summaries
+  Quality Scorer            Rule-based quality gate
+    |
+    v
+REST API (/api/articles)
+    |
+    v
+[Airopa]                    <-- This repo (React frontend)
+  Feed-first homepage
+  Category filtering
+  Article detail pages
 ```
 
-**Edit a file directly in GitHub**
+## Tech Stack
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+| Layer     | Technology                                    |
+|-----------|-----------------------------------------------|
+| Framework | React 18 + TypeScript                         |
+| Build     | Vite                                          |
+| Styling   | Tailwind CSS + shadcn/ui                      |
+| Routing   | React Router v6                               |
+| Data      | TanStack Query v5 (infinite scroll, caching)  |
+| Icons     | Lucide React                                  |
+| Testing   | Vitest + MSW + Testing Library                |
+| Deploy    | Lovable (Netlify)                             |
 
-**Use GitHub Codespaces**
+## Project Structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+src/
+  components/       UI components (CompactHeader, FeaturedStories, ArticleFeed, etc.)
+  pages/            Route pages (Index, ArticleDetail, NotFound)
+  hooks/            Data fetching hooks (useArticles, useArticle, useHealthCheck)
+  lib/              Utilities (adapters, categories, countries, articleSelection)
+  __tests__/        Test files, mocks, and handlers
+public/
+  assets/           Static images (hero-bg.jpg, etc.)
+```
 
-## What technologies are used for this project?
+## Getting Started
 
-This project is built with:
+```sh
+# Install dependencies
+npm install
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Start dev server
+npm run dev
 
-## How can I deploy this project?
+# Run tests
+npm run test:run
 
-Simply open [Lovable](https://lovable.dev/projects/01c9fdfc-a1de-4d81-aa56-8c5186803780) and click on Share -> Publish.
+# Build for production
+npm run build
+```
 
-## Can I connect a custom domain to my Lovable project?
+## Environment
 
-Yes, you can!
+The app reads the API base URL from environment variables:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+VITE_API_BASE_URL=https://web-production-bcd96.up.railway.app
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Key Components
+
+- **CompactHeader** -- Sticky header with background texture and navigation
+- **FeaturedStories** -- Hero card for top story + grid of featured articles
+- **ArticleFeed** -- Infinite-scroll feed with category filtering
+- **ArticleCardHorizontal** -- Card component with image, summary, source badge
+- **CategorySpotlight** -- Reusable category section (startups, policy, research, industry)
+
+## Related
+
+- **Backend**: [airopa-automation](https://github.com/vlakmaker/airopa-automation) -- FastAPI pipeline with LLM classification
