@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Navigation } from "@/components/Navigation";
+import { CompactHeader } from "@/components/CompactHeader";
 import { Footer } from "@/components/Footer";
 import { ArticleHero } from "@/components/ArticleHero";
 import { SourceAttribution } from "@/components/SourceAttribution";
@@ -20,37 +20,23 @@ import { articleToPost } from "@/lib/adapters";
 import { ChevronLeft, InfoIcon } from "lucide-react";
 import NotFound from "./NotFound";
 
-/**
- * ArticleDetail Page
- *
- * Displays full article details with ethical source attribution.
- * Features:
- * - Article hero with cover image
- * - Prominent source attribution
- * - Breadcrumb navigation
- * - Clear CTA to read full article at source
- */
 export default function ArticleDetail() {
   const { id } = useParams<{ id: string }>();
 
-  // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Call hook at top level (before any conditional returns)
   const { data: article, isLoading, error, refetch } = useArticle(id || '');
 
-  // Validate article ID after hooks
   if (!id) {
     return <NotFound />;
   }
 
-  // Loading state
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background">
-        <Navigation />
+        <CompactHeader />
         <div className="pt-20">
           <Skeleton className="w-full aspect-[21/9]" />
           <div className="container mx-auto px-4 py-12 max-w-4xl">
@@ -64,11 +50,10 @@ export default function ArticleDetail() {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <div className="min-h-screen bg-background">
-        <Navigation />
+        <CompactHeader />
         <div className="container mx-auto px-4 py-24 max-w-2xl">
           <ErrorDisplay
             title="Failed to Load Article"
@@ -89,26 +74,21 @@ export default function ArticleDetail() {
     );
   }
 
-  // Article not found
   if (!article) {
     return <NotFound />;
   }
 
-  // Convert API article to Post format
   const post = articleToPost(article);
   const { data: frontmatter } = post;
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      <CompactHeader />
 
       <main className="pt-16">
-        {/* Article Hero */}
         <ArticleHero frontmatter={frontmatter} />
 
-        {/* Article Content */}
         <div className="container mx-auto px-4 py-12 max-w-4xl">
-          {/* Breadcrumb Navigation */}
           <Breadcrumb className="mb-8">
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -123,7 +103,6 @@ export default function ArticleDetail() {
             </BreadcrumbList>
           </Breadcrumb>
 
-          {/* Source Attribution - PROMINENT POSITION */}
           <div className="mb-8">
             <SourceAttribution
               sourceName={frontmatter.source.name}
@@ -132,7 +111,6 @@ export default function ArticleDetail() {
             />
           </div>
 
-          {/* Article Metadata Section */}
           <div className="prose prose-slate max-w-none mb-8">
             <div className="bg-muted/50 rounded-lg p-6 border border-border">
               <div className="flex items-start gap-3 mb-4">
@@ -148,7 +126,6 @@ export default function ArticleDetail() {
             </div>
           </div>
 
-          {/* Article Quality and Category Info */}
           {frontmatter.country && (
             <div className="bg-card rounded-lg p-6 border border-border mb-8">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
@@ -173,7 +150,6 @@ export default function ArticleDetail() {
             </div>
           )}
 
-          {/* Secondary CTA */}
           <div className="text-center py-8 border-t border-border">
             <Button asChild size="lg" variant="outline">
               <a
@@ -188,7 +164,6 @@ export default function ArticleDetail() {
             </Button>
           </div>
 
-          {/* Back to Home Link */}
           <div className="text-center pt-8 border-t border-border">
             <Button asChild variant="ghost">
               <Link to="/">

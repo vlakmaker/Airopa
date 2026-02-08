@@ -5,10 +5,16 @@
  */
 
 // Article Categories
-export type ArticleCategory = 'startups' | 'policy' | 'country' | 'stories';
+export type ArticleCategory = 'startups' | 'policy' | 'country' | 'stories' | 'research' | 'industry';
 
-// European Countries
-export type ArticleCountry = 'France' | 'Germany' | 'Netherlands' | 'Europe';
+// European Countries (all 27 EU members + Europe)
+export type ArticleCountry =
+  | 'Austria' | 'Belgium' | 'Bulgaria' | 'Croatia' | 'Cyprus'
+  | 'Czech Republic' | 'Denmark' | 'Estonia' | 'Finland' | 'France'
+  | 'Germany' | 'Greece' | 'Hungary' | 'Ireland' | 'Italy'
+  | 'Latvia' | 'Lithuania' | 'Luxembourg' | 'Malta' | 'Netherlands'
+  | 'Poland' | 'Portugal' | 'Romania' | 'Slovakia' | 'Slovenia'
+  | 'Spain' | 'Sweden' | 'Europe';
 
 // Core Article Interface
 export interface Article {
@@ -20,6 +26,7 @@ export interface Article {
   country?: ArticleCountry;
   quality_score: number;
   image_url?: string | null;
+  summary?: string;
   created_at: string;
   published_date?: string;
 }

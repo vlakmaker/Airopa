@@ -1,4 +1,4 @@
-export type Pillar = 'research' | 'startups' | 'policy' | 'country';
+export type Pillar = 'research' | 'startups' | 'policy' | 'country' | 'industry';
 
 export interface PostFrontmatter {
     title: string;

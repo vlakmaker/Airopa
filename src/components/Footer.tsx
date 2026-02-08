@@ -4,8 +4,14 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-secondary/50 border-t border-border">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="relative border-t border-border overflow-hidden">
+      {/* Background image layer */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/assets/hero-bg.jpg')" }}
+      />
+      <div className="absolute inset-0 bg-background/90" />
+      <div className="relative container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           {/* Main Footer Content */}
           <div className="grid md:grid-cols-4 gap-8 mb-8">

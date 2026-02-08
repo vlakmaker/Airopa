@@ -103,11 +103,15 @@ describe('Adapters', () => {
       expect(wsPost.data.cover).toBe('/assets/startup-berlin.jpg');
     });
 
-    it('should include quality score in summary', () => {
-      const post = articleToPost(mockArticle);
+    it('should use article summary when available', () => {
+      const articleWithSummary = { ...mockArticle, summary: 'AI startup funding round.' };
+      const post = articleToPost(articleWithSummary);
+      expect(post.data.summary).toBe('AI startup funding round.');
+    });
 
-      expect(post.data.summary).toContain('Quality Score');
-      expect(post.data.summary).toContain('85%');
+    it('should default to empty string when no summary', () => {
+      const post = articleToPost(mockArticle);
+      expect(post.data.summary).toBe('');
     });
   });
 

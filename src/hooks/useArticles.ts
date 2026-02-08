@@ -1,23 +1,20 @@
 /**
- * React Query Hook for fetching articles list
+ * React Query Hooks for fetching articles
  */
 
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { fetchArticles } from '@/api/client';
-import { ArticlesListResponse, ArticleQueryParams } from '@/api/types';
+import { ArticlesListResponse, ArticleQueryParams, ArticleCategory } from '@/api/types';
 
 /**
  * Hook to fetch articles with filtering and pagination
- *
- * @param params - Query parameters for filtering
- * @returns UseQueryResult with articles data
  */
 export function useArticles(params: ArticleQueryParams = {}) {
   return useQuery<ArticlesListResponse, Error>({
     queryKey: ['articles', params],
     queryFn: () => fetchArticles(params),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     retry: 2,
     refetchOnWindowFocus: false,
   });
@@ -46,11 +43,39 @@ export function useArticlesByCountry(country: ArticleQueryParams['country'], lim
 }
 
 /**
- * Hook to fetch featured articles (high quality, limited number)
+ * Hook to fetch featured articles (high quality, over-fetch for diversity)
  */
-export function useFeaturedArticles(limit = 1) {
+export function useFeaturedArticles(limit = 8) {
   return useArticles({
     limit,
-    minQuality: 0.8,
+    minQuality: 0.7,
+  });
+}
+
+/**
+ * Hook for paginated article feed with infinite scroll
+ */
+export function useFeedArticles(category?: ArticleCategory) {
+  const pageSize = 10;
+
+  return useInfiniteQuery<ArticlesListResponse, Error>({
+    queryKey: ['feed-articles', category],
+    queryFn: ({ pageParam }) =>
+      fetchArticles({
+        limit: pageSize,
+        offset: pageParam as number,
+        category,
+        minQuality: 0.3,
+      }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      const loaded = allPages.reduce((sum, page) => sum + page.articles.length, 0);
+      if (loaded >= lastPage.total) return undefined;
+      return loaded;
+    },
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    retry: 2,
+    refetchOnWindowFocus: false,
   });
 }

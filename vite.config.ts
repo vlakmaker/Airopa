@@ -10,6 +10,12 @@ export default defineConfig(({ mode }) => ({
     port: 5173,          // standard Vite port (use whatever you like)
     strictPort: true,    // fail instead of auto-picking random ports
     open: false,         // don't auto-open browser
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+    },
     fs: {
       // Force Vite to allow reading markdown files and project files
       allow: ["."],

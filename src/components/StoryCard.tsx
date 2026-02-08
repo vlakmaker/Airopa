@@ -46,15 +46,6 @@ export function StoryCard({ post, featured = false }: { post: Post; featured?: b
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent-foreground border border-accent/20">
                             {d.pillar}
                         </span>
-                        {d.tags &&
-                            d.tags.slice(0, 2).map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/50 text-secondary-foreground border border-secondary/30"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
                         {d.country && (
                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/20 text-accent-foreground">
                                 {d.country}
@@ -75,14 +66,16 @@ export function StoryCard({ post, featured = false }: { post: Post; featured?: b
                     </header>
 
                     {/* Summary */}
-                    <p
-                        className={cn(
-                            "text-slate-700 line-clamp-3 mb-4",
-                            featured ? "text-base md:text-lg" : "text-sm"
-                        )}
-                    >
-                        {d.summary || "Read more about this story..."}
-                    </p>
+                    {d.summary && (
+                        <p
+                            className={cn(
+                                "text-slate-700 line-clamp-3 mb-4",
+                                featured ? "text-base md:text-lg" : "text-sm"
+                            )}
+                        >
+                            {d.summary}
+                        </p>
+                    )}
 
                     {/* Metadata Footer */}
                     <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto pt-3 border-t border-border/50">
