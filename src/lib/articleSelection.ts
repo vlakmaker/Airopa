@@ -24,5 +24,16 @@ export function selectFeaturedArticles(
     categoryCounts[cat] = currentCount + 1;
   }
 
+  // Fallback: if diversity constraint left us short, fill remaining slots
+  // ignoring the per-category limit
+  if (selected.length < count) {
+    const selectedIds = new Set(selected.map((a) => a.id));
+    for (const article of sorted) {
+      if (selected.length >= count) break;
+      if (selectedIds.has(article.id)) continue;
+      selected.push(article);
+    }
+  }
+
   return selected;
 }
